@@ -1,135 +1,261 @@
-AMAR - AI Med Assistance Robot
-AMAR is a smart, AI-powered system designed to ensure medication adherence, enhance patient safety, and provide real-time peace of mind for guardians and caregivers.
+# 🤖 AMAR - AI Medical Assistance Robot
 
-This project integrates a physical dispensing robot controlled by a Raspberry Pi with a professional web-based dashboard. It addresses the critical challenges of medication non-adherence, delayed emergency responses, and the need for remote patient monitoring in a single, cohesive solution.
+AMAR (AI Medical Assistance Robot) is an AI-powered healthcare assistant designed to automate medicine dispensing, improve medication adherence, and provide remote monitoring for elderly individuals and patients. The system combines embedded hardware, artificial intelligence, IoT, and web technologies into a single healthcare platform.
 
-✨ Key Features
-Automated & Reliable Dispensing: A dual-servo motor mechanism accurately dispenses pills from multiple compartments based on a remotely managed schedule.
+---
 
-Professional Web Dashboard: A clean, responsive, and intuitive web interface for guardians to manage schedules, monitor adherence, and view activity logs.
+# 📌 Problem Statement
 
-Instant Emergency Alerts: A one-touch physical button on the device triggers immediate SMS and voice call alerts to a guardian via a dedicated GSM module.
+Medication non-adherence is one of the major challenges faced by elderly patients, individuals with chronic illnesses, and people who require continuous medication. Missed or incorrect doses can lead to serious health complications.
 
-Live Video Monitoring: During an emergency, caregivers can view a live, low-latency video stream from the Pi Camera directly on the web dashboard.
+Existing reminder systems often provide only alarms and lack intelligent assistance, remote monitoring, emergency support, and automated dispensing capabilities.
 
-AI-Powered Assistance (Gemini API):
+AMAR addresses these challenges by providing an intelligent medication management system capable of automating medicine dispensing, monitoring patient activity, assisting through voice interaction, and notifying caregivers during emergencies.
 
-AI Assistant: Ask questions about medications and wellness.
+---
 
-Log Analysis: Get AI-driven insights into adherence patterns.
+# 🎯 Objectives
 
-Schedule Summaries: Generate easy-to-read summaries of complex schedules.
+The primary objectives of AMAR are:
 
-Real-Time Two-Way Communication: A robust WebSocket connection ensures the hardware and web dashboard are always perfectly in sync, providing instant updates.
+- Automate medicine dispensing based on scheduled timings.
+- Improve medication adherence and patient safety.
+- Provide AI-powered voice assistance for patient interaction.
+- Enable remote monitoring through a web dashboard.
+- Generate emergency alerts during critical situations.
+- Maintain medication history and activity logs.
+- Create an easy-to-use system suitable for elderly users.
 
-🚀 Live Demo & Visuals
-Here's a look at the AMAR system in action, showcasing the professional guardian dashboard and the physical hardware prototype.
+---
 
-Guardian Web Dashboard:
+# ⚙️ Methodology
 
-AMAR Hardware Prototype:
+AMAR follows a modular layered architecture.
 
-🛠️ Technology Stack
-Category
+1. The guardian configures patient details and medicine schedules through the web dashboard.
 
-Technologies Used
+2. The backend server stores patient information and dispensing schedules in the database.
 
-Hardware
+3. The Raspberry Pi continuously monitors the schedule.
 
-Raspberry Pi 4, Servo Motors, Pi Camera, SIM800L GSM Module
+4. At the scheduled time, the Raspberry Pi activates the dispensing mechanism using servo motors.
 
-Backend
+5. Voice reminders are generated using Text-to-Speech while patient responses are captured using Speech-to-Text.
 
-Python, Flask, Flask-SocketIO, APScheduler
+6. Dispensing activities are logged and synchronized with the web dashboard.
 
-Frontend
+7. During emergencies, the GSM module sends alerts and the Pi Camera starts live streaming for remote monitoring.
 
-HTML5, CSS3, JavaScript, Bootstrap
+---
 
-Communication
+# 🏗️ System Architecture
 
-REST API, WebSockets
+```
+Guardian Dashboard
+        │
+ REST API + WebSocket
+        │
+ Flask Backend Server
+        │
+ ┌──────────────┬──────────────┬─────────────┐
+ │              │              │
+Database      AI Module     Hardware Layer
+ │              │              │
+ └──────── Raspberry Pi ───────┘
+        │
+ ┌──────┼─────────┬──────────┬──────────┐
+ │      │         │          │
+Servo  Camera    USB Mic   GSM Module
+        │
+ Bluetooth Speaker
+```
 
-AI Services
+---
 
-Google Gemini API
+# ✨ Features
 
-Libraries
+- Automated medicine dispensing
+- AI voice assistant
+- Speech-to-Text
+- Text-to-Speech
+- Patient management
+- Medicine scheduling
+- Emergency alert system
+- Live video streaming
+- Guardian dashboard
+- Activity logging
+- AI-powered schedule summaries
+- Remote monitoring
 
-gpiozero, pyserial, opencv-python-headless, Chart.js
+---
 
-📂 Setup and Installation Guide
-This guide provides the steps to set up the software on your Raspberry Pi to run the AMAR backend server.
+# 🛠️ Hardware Components
 
-1. Initial Raspberry Pi Configuration
-Install Raspberry Pi OS: Start with a fresh installation of Raspberry Pi OS (formerly Raspbian) Lite (for servers) or with Desktop.
+- Raspberry Pi 3A+
+- Raspberry Pi Camera Module
+- USB Microphone
+- Bluetooth Speaker
+- Servo Motors
+- SIM800L GSM Module
+- Push Button
+- Power Supply
 
-Enable Interfaces: Run sudo raspi-config in the terminal and enable the following interfaces:
+---
 
-SSH: For remote access.
+# 💻 Software Stack
 
-I2C: If you have I2C sensors.
+### Backend
 
-Serial Port: Crucial for the GSM module. Ensure the login shell over serial is disabled and the serial port hardware is enabled.
+- Python
+- Flask
+- Flask-SocketIO
+- APScheduler
 
-Camera: Enable the legacy camera interface if using a Pi Camera module.
+### Frontend
 
-Update System: Run the following commands to make sure your system is up to date:
+- HTML5
+- CSS3
+- JavaScript
+- Bootstrap
 
-sudo apt update
-sudo apt full-upgrade
+### AI
 
-2. Hardware Wiring (GPIO Pins)
-Connect your components to the Raspberry Pi's GPIO pins. The Python code (hardware_controller.py) is configured for these pins. If you use different pins, you must update the code.
+- Google Gemini API
 
-Rotation Servo: GPIO 17
+### Database
 
-Dispense Servo: GPIO 27
+- SQLite
+- JSON
 
-Emergency Button: GPIO 2 (and a ground pin)
+### Communication
 
-SIM800L GSM Module:
+- REST API
+- WebSockets
 
-VCC to Pi 5V
+---
 
-GND to Pi GND
+# 🚀 Software Setup
 
-TXD to Pi RXD (GPIO 15)
+## Step 1
 
-RXD to Pi TXD (GPIO 14)
+Clone the repository.
 
-3. Software Installation
-Clone/Copy Files: Transfer all project files (Python backend and HTML/CSS/JS frontend) into a new directory on your Pi (e.g., /home/pi/amar_robot).
+```bash
+git clone https://github.com/yourusername/AMAR.git
 
-Install Dependencies: Open a terminal, navigate to your project directory, and install all the required Python libraries using pip.
+cd AMAR
+```
 
-cd /home/pi/amar_robot
-sudo apt install python3-pip
+---
+
+## Step 2
+
+Install dependencies.
+
+```bash
 pip install -r requirements.txt
+```
 
-Note: opencv-python-headless can take some time to install.
+---
 
-4. Running the Server
-Navigate to Directory: Make sure you are in the amar_robot directory in your terminal.
+## Step 3
 
-Run the Main Application: Execute the main Python script. Using sudo is often necessary for GPIO access.
+Configure Raspberry Pi.
 
-sudo python3 app.py
+```bash
+sudo raspi-config
+```
 
-Check the Output: You should see log messages indicating that the server has started, the hardware has been initialized, and it is listening on port 5000.
+Enable:
 
-5. Connecting the Web App
-Find Your Pi's IP Address: In the Pi's terminal, type hostname -I. This will give you its local IP address (e.g., 192.168.1.XX).
+- Camera
+- SSH
+- Serial Port
+- I2C
 
-Update script.js: In your script.js file, update the API and WebSocket URLs to point to your Pi's IP address.
+Reboot the Raspberry Pi.
 
-Access the UI: Open the index.html file on a computer connected to the same Wi-Fi network as your Raspberry Pi. The web interface should now be able to communicate with the AMAR device.
+---
 
-📈 Future Work
-Conducting clinical trials with real patients and caregivers to gather feedback.
+## Step 4
 
-Integration of more health sensors (e.g., heart rate, temperature) for comprehensive vitals monitoring.
+Run the backend server.
 
-Miniaturization of the hardware for a sleeker, more commercially viable design.
+```bash
+python3 app.py
+```
 
-Developing a dedicated mobile application for iOS and Android for enhanced notifications and accessibility.
+---
+
+## Step 5
+
+Find the Raspberry Pi IP address.
+
+```bash
+hostname -I
+```
+
+---
+
+## Step 6
+
+Open the dashboard in your browser.
+
+```
+http://<RaspberryPi-IP>:5000
+```
+
+---
+
+# 🔌 Hardware Connections
+
+| Component | Connection |
+|------------|------------|
+| Rotation Servo | GPIO17 |
+| Dispense Servo | GPIO27 |
+| Emergency Button | GPIO2 |
+| GSM TX | GPIO15 |
+| GSM RX | GPIO14 |
+| Pi Camera | CSI Port |
+| USB Microphone | USB Port |
+| Bluetooth Speaker | Bluetooth |
+
+---
+
+# 📂 Project Structure
+
+```
+AMAR
+│
+├── backend/
+├── frontend/
+├── hardware/
+├── database/
+├── documentation/
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# 🚀 Future Enhancements
+
+- Mobile application
+- Offline AI assistant
+- Face recognition
+- Health sensor integration
+- Cloud synchronization
+- Voice authentication
+- Multi-patient management
+
+---
+
+# 👨‍💻 Developer
+
+**Abhinandan A S**
+
+Bachelor of Engineering
+
+Electrical and Electronics Engineering
+
+---
